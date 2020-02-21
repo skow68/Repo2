@@ -1,0 +1,37 @@
+#!/usr/bin/perl 
+use strict;
+use utf8;
+use Encode;
+use 5.10.1;
+use XML::Simple;
+use Data::Dumper qw( Dumper );
+use App::LDAPALO;
+use App::Pauto::Akon;
+use App::PaloAlto;
+#Testowanie funkcji modułu widocznych dla aplikacji, przeznaczonych do tworzenia i utrzymywania reguły.
+#my $ldap = App::LDAPALO->new({group => 'cn\PA-ACL'});
+#$ldap->delete_group("PA-ACL");
+my @users = ('',....);
+my @addr = ('',....);
+my $job = App::Pauto::Akon->new({id => '1002'});
+$job->error and die $job->error; #to będzie problem z firewall'em
+###1. add addresses to the rule
+#$job->add_addr(\@addr) || die $job->error;
+#say $job->error; #Błąd nie fatalny
+#say "Add addr passed";
+###2. add users to te rule
+#$job->add_users(\@users) || die $job->error;
+#say $job->error; #Błąd nie fatalny
+#say "Add users passed";
+#Commit
+#$job->save || die "Saving my work failed"; 
+#3. usuń jeden adres
+#my @todel = ('10.1.1.0/24');
+#$job->del_addr(\@todel) || die "Connection to firewall failed.";
+#4. usuń pojedyńczego usera
+#my @todel = ('cn\sk');
+#$job->del_users(\@todel) || die "Connection LDAP failed";
+#usuń regułę
+my @error;
+$job->del_rule(\@error) || die "Connection to firewall failed.";
+say join("\n",@error);
